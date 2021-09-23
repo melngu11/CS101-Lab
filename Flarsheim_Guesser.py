@@ -1,3 +1,11 @@
+######
+#CS 101 Lab
+#Week 3 Assignment - Flarsheim Guesser
+#Melisa Nguyen
+#mn7fh@umsystem.edu
+##
+#Code a program to guess a user's numbers from 0-100 by analyzing the remainders of the user number when divided by 3, 5 and 7
+######
 print('Welcome to the Flarsheim Guesser!\n')
 print('Please think of a number between and including 1 and 100')
 print()
