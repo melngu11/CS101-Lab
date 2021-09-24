@@ -14,11 +14,12 @@ while game == True:
   #User number input and analuzed by dividing by 3 and considering remainder
   user_div_3 = int(input('What is the remainder when your number is divided by 3? '))
   print()
-
-  if user_div_3 < 0:
-    print('The value entered must be 0 or greater')
-  if user_div_3 >= 3:
-    print('The value entered must be less than 3')
+  while user_div_3 != 0 and user_div_3 != 1 and user_div_3 !=2:
+    if user_div_3 < 0:
+        print('The value entered must be 0 or greater')
+    if user_div_3 >= 3:
+        print('The value entered must be less than 3')
+    user_div_3 = int(input('What is the remainder when your number is divided by 3? '))
 
   #User number analyzed with division of 5 and considering remainder
   user_div_5 = int(input('What is the remainder when your number is divided by 5? '))
