@@ -1,3 +1,27 @@
+########################################################################
+##
+## CS 101 Lab
+## Program 05 - Functions - Slot Machine
+## Melisa Nguyen    
+## mn7fh@umsystem.edu
+##
+## PROBLEM : Code a program to track user bank while betting on matches from 3 randomly generated numbers
+##
+## ALGORITHM : 
+##      1. Write out the algorithm
+##      2. Test and fix bugs
+##      3. Test all combinations of input to generate all possible outputs
+## 
+## ERROR HANDLING:
+##      Wages must be greater than 0
+##      Wages must not be greater than current bank
+##      Inital bank must be between 0-100
+##
+## OTHER COMMENTS:
+##      Game will end once bank reaches 0. Option availble to restart game with a new bank.
+##
+########################################################################
+
 import random
 def play_again():
   play_again = input('Would you like to play again?')
@@ -10,7 +34,6 @@ def play_again():
   if play_again == 'Y' or play_again == 'YES':
     game = True
     return game
-        
   if play_again == 'N' or play_again == 'NO':
     game = False
     print('Thanks for playing!')
@@ -21,20 +44,17 @@ def get_bank():
     bank = int(input('Invalid entry. Starting chips must be greater than 0 and less than 101:'))
   if 0<bank<=100:
     return bank
-
 def get_wager(bank):
     wager=int(input("How many chips would you like to bet?"))
     while wager <= 0 or wager > bank:
         wager=int(input('Wager must be greater than zero and less than or equal to your bank:')
         )
     return wager
-
 def get_slot_results():
   reela= random.randint(1,11)
   reelb= random.randint(1,11)
   reelc= random.randint (1,11)
   return reela , reelb , reelc
-
 def get_matches(reela, reelb, reelc):
   if reela == reelb or reela == reelc or reelb==reelc:
     matches = 2
@@ -43,8 +63,6 @@ def get_matches(reela, reelb, reelc):
   else:
       matches = 0
   return matches 
-
-
 def get_payout(wager, matches):
     if matches == 3:
         win = wager * 10
@@ -54,21 +72,17 @@ def get_payout(wager, matches):
         win = 0
     payout = win - wager
     return payout
-
 if __name__ == "__main__":
   bank = 0
   spins = 0
   max_chips = 0
   loss =0
-
 game = True
 while game == True:
   bank = get_bank()
-  
   while bank > 0 :
     wager = get_wager(bank)    
     reela, reelb, reelc = get_slot_results()
-
     matches = get_matches(reela,reelb,reelc)
     payout = get_payout(wager,matches)
     if payout <= 0:
