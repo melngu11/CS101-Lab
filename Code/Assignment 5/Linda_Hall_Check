@@ -1,0 +1,101 @@
+# CS 101-Lab
+# Week 6 - Strings
+# Melisa Nguyen
+# mn7fh@umsystem.edu
+# Program:
+# Linda Hall Library Card Checker - This program will iterate through the user's library card characters to check for validity. This includes insuring the card has at last 10 characters, the first 5 charcters must be A-Z and the last 5 being digits. This last 5 digits also fall into sub categories to check for the school the student belongs to and a their grade. The final digit is a 'digit checker.'
+# Algorithim:
+# 1) By interating through the card we can check each character agaisnt our parameters
+# 2)Digit checker formula: (index+1)*value
+#   The sum of all digit checks will be modulo by 10
+#   The final character of the card must match the digit checker's returned value to be valid
+################################
+def check_length(id):
+  length = len(str(id))
+  if length != 10:
+    return 'Library card is invalid.\nThe length of card given must be 10\n'
+  else:
+    return True
+def check_chr_value(id):
+  j=0
+  for i in id[0:5]:
+    value = ord(i)-65
+    if 25>= value >=0 :
+      j+=1
+    else:
+      return 'The library card is invalid.\nThe first 5 characters must be A-Z, the invalid character is at {} and is {}\n'.format(j,i)
+  k=7
+  for i in id[7:]:
+    if i.isdigit():
+      k+=1
+    else:
+      return 'Library card is invalid.\nThe last 3 characters must be 0-9, the invalid character is at {} and is {}\n'.format(k,i)
+  if int(id[5]) not in range(1,4):
+    return 'Library card is invalid.\nThe sixth character must be 1,2 or 3\n'
+  if int(id[6]) not in range(1,5):
+    return 'The seventh character must be 1,2,3, or 4\n'
+  return True
+def get_school(id):
+  if id[5] == '1':
+    return 'School of Computing and Engineering SCE'
+  elif id[5] == '2':
+    return 'School of Law'
+  elif id[5] == '3':
+    return 'College of Arts and Sciences'
+  else:
+    return 'Invalid School'
+def get_grade(id):
+  if id[6] == '1':
+    return 'Freshman'
+  elif id[6] == '2':
+    return 'Sophomore'
+  elif id[6] == '3':
+    return 'Junior'
+  elif id[6] == '4':
+    return 'Senior'
+  else:
+    return 'Invalid Grade'
+def get_check_digit(id):
+  alpha = id[:5]
+  num = (id[5:])
+  alpha_list=[]
+  j=0
+  for i in alpha:
+    value = (ord(i)-65)*(j+1)
+    j+=1
+    alpha_list.append(value)
+  k = 5
+  for i in num:
+    value = (k+1)*int(i)
+    k+=1
+    alpha_list.append(value)
+  digit = sum(alpha_list)%10
+  if digit == int(id[-1]):
+    return True
+  else:
+    return'Library card is invalid.\nCheck Digit {} does not match calculated value of {}\n'.format(id[-1],digit)
+##Program Header##
+print('{name:^50}'.format(name='Linda Hall'))
+print('{name:^50}'.format(name='Library Card Check'))
+print('='*50)
+##
+checker_status = True
+while checker_status == True:
+  lib_card = input('Enter Library Card. Hit Enter to Exit ==> ')
+  lib_card=lib_card.upper()
+  if len(lib_card) < 1:
+    checker_status == False
+    break
+  length = (check_length(lib_card))
+  value = (check_chr_value(lib_card))
+  digit = (get_check_digit(lib_card))
+  if length == True and value == True and digit == True:
+    print('Library card is valid')
+    print('The card belongs to a student in {}'.format(get_school(lib_card)))
+    print('The card belongs to a {}\n'.format(get_grade(lib_card)))
+  elif length !=True:
+    print(length)
+  elif value != True:
+    print(value)
+  elif digit != True:
+    print(digit)
