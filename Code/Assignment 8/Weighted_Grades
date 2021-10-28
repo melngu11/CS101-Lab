@@ -1,0 +1,113 @@
+import math
+test_bank = []
+assignment_bank =[]
+menu = ('1','2','3','4','5','6','D','Q','d','q')
+selection = ''
+def print_menu():
+    print()
+    print('{:>10}'.format('Grade Menu'))
+    print('1 - Add Test')
+    print('2 - Remove Test')
+    print('3 - Clear Test')
+    print('4 - Add Assignment')
+    print('5 - Remove Assignment')
+    print('D  - Display Scores')
+    print('Q - Quit\n')
+def average_calculation(bank):
+    try:
+        avg = sum(bank)/len(bank)
+        return avg
+    except:
+        return 'n/a'
+def std_calculations(bank):
+    try:
+        average= sum(bank)/len(bank)
+        std_bank =[]
+        for i in bank:
+            std_bank.append((i-average)**2)
+        std_bank = math.sqrt((sum(std_bank))/len(bank))
+        std_bank = '{:.2f}'.format(std_bank)
+        return (std_bank)
+    except:
+        return 'n/a'
+def min_bank(bank):
+    try:
+      minimum = min(bank)
+      return minimum
+    except:
+      return 'n/a'
+def max_bank(bank):
+    try:
+      maximum = max(bank)
+      return maximum
+    except:
+      return 'n/a'
+def weighted_score(test,assignment):
+    try:
+        test_w = (test_avg)*.60
+        assign_w = (assignment_avg)*.40
+        w_score = float(test_w + assign_w)
+        w_score = '{:.2f}'.format(w_score)
+        return w_score
+    except:
+        return '0.00'
+def display_scores():
+    print('{:<20}{:<10}{:<10}{:<10}{:<10}{:<10}'.format('Type','#','min','max','avg','std'))
+    print('='*65)
+    #change format varibles
+    print('{:<20}{:<10}{:<10}{:<10}{:<10}{:<10}'.format('Test',test_count, test_min, test_max,test_avg,test_std))
+    print('{:<20}{:<10}{:<10}{:<10}{:<10}{:<10}'.format('Programs',assignment_count, assignment_min, assignment_max,assignment_avg,assignment_std))
+    print()
+    if weighted == '0.00':
+        print('The weighted score is {:>10}'.format(weighted))
+    else:
+        print('The weighted score is {:>10}'.format(weighted))
+while selection != 'Q':
+    print_menu()
+    selection = input('==> ')
+    print()
+    if selection.isalpha():
+      selection= selection.upper()
+    if selection not in menu:
+        selection = input('Please enter valid selection ==> ') 
+    if selection == '1':
+        new_test_score = float(input('Enter the new test score 0-100 ==> '))
+        while new_test_score < 0 :
+            new_test_score = float(input('Enter the new test score 0-100 ==> '))
+        test_bank.append(new_test_score)
+    elif selection == '2':
+        try:
+            remove = float(input('Enter the test score to remove ==> '))
+            test_bank.remove(remove)
+        except:
+            print('Could not find that score to remove')
+    elif selection == '3':
+        test_bank.clear()
+        test_count = 0
+    elif selection == '4':
+        add_assignment = float(input('Enter the new assignment score ==> '))
+        assignment_bank.append(add_assignment)
+    elif selection == '5':
+        remove_assignment = float(input('Enter the assignment to remove ==> '))
+        try:
+            assignment_bank.remove(remove_assignment)
+        except:
+            print('Could not find that score to remove')
+    elif selection == '6':
+        assignment_bank.clear()
+    elif selection =='D':
+        test_count= len(test_bank)
+        assignment_count=len(assignment_bank)
+        assignment_avg = average_calculation(assignment_bank)
+        assignment_std = std_calculations(assignment_bank)
+        assignment_max = max_bank(assignment_bank)
+        assignment_min = min_bank(assignment_bank)
+        test_avg = average_calculation(test_bank)
+        test_std = std_calculations(test_bank)
+        test_max = max_bank(test_bank)
+        test_min = min_bank(test_bank)
+        weighted = weighted_score(test_bank,assignment_bank)
+        display_scores()
+
+            
+
