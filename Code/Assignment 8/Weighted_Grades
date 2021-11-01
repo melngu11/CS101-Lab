@@ -1,3 +1,27 @@
+################################################
+#CS101-Lab
+#Weighted Grade Program
+#Melisa Nguyen
+#mnfh@umsystem.edu
+#PROBLEM:
+#Design a program to store and calculate a user's grade. Calculations for both test and assignment(programs) scores include the total number of entries,
+#  maximum score, minimnum score, average(mean), standard deviation, and total weighted grade.
+#ALGORITHM:
+#   1. User will select from the menu which operation they would like to excecute 
+#   2. Adding to either test or assignments will add the score to their respective list
+#   3. User may also remove any previously added score
+#   4. Average (mean) of either test scores or assignment scores will caluclate the sum of all scores then divide it by the total amount of scores entered
+#   5. Maximum/minimum will return the highest/lowest score of the respective group
+#   6. Standard Diviation (std) takes every score (test or assignment) and subtracts the average from the score. The scores will the taken to the power of 2 
+#       and added together. Once added together, the scores willl be divided by the number of scores entered. Finally, std will take the square root of this value.
+#   7. Since the test scores are 60% of the total grade and assignment scores are 40% of total grade, weighted scores are calculated by taking the both test 
+#       and assignment averages and multiplying them by 0.60 and 0.40, respectively. 
+#       enter a file until a valid file is entered.
+#ERROR HANDLING:
+#   Scores entered must be 0 or greater. Scores above 100 will be considered as they represent extra credit
+#   Hitting enter with no entry for selection input will trigger an error and end the program
+#   When removing scores, if a score is not found within the test/assignment bank user will be notified that score was not found, thus no score was removed
+################################################
 import math
 test_bank = []
 assignment_bank =[]
@@ -108,6 +132,3 @@ while selection != 'Q':
         test_min = min_bank(test_bank)
         weighted = weighted_score(test_bank,assignment_bank)
         display_scores()
-
-            
-
