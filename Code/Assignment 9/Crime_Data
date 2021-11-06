@@ -1,0 +1,105 @@
+################################################
+#CS101-Lab
+#KCPD Crime Data Program
+#Melisa Nguyen
+#mnfh@umsystem.edu
+#PROBLEM:
+#Design a program to calculate the highest rate crimes in Kansas City. The program will differentiate the number of
+#   offenses commited in a certain zipcode, the month with the highest crime rate and what specific offense was commited.
+#ALGORITHM:
+#   1. User will choice a crime file to open
+#   2. Creating dictionaries from the file using the dates, offense type, and zip code
+#   3. Dictionaries are accessed by using key words to output values.
+#  
+#ERROR HANDLING:
+#   Files inputed by user that are not found will trigger an error until a file is valid.
+#   When offenses print by zipcodes, crimes that were commited without zipcodes entered into the file
+#   will be printed first without a corresponding zipcode.
+################################################
+
+if __name__ == "__main__":
+
+  import csv
+  path = '/Users/melisanguyen/Documents/GitHub/CS101-Lab/Code/Assignment 9/'
+  def read_in_file():
+    data= []
+    file = True
+    while file:
+      try:
+        input_file = input('Enter the name of the crime data file ==> ')
+        path_file = path+input_file
+        read_file = open(path_file,encoding='utf-8')
+        file_csv = csv.reader(read_file)
+        for line in file_csv:
+          data.append(line)
+        read_file.close()
+        return data
+      except:
+        print('Could not fine the file speicified. {} not found'.format(input_file))
+  def month_from_number(number):
+    number=int(number)
+    months= {1:'January', 2:'February', 3:'March', 4:'April', 5:'May', 6:'June', 7:'July', 8:'August', 9:'September', 10:'October', 11:'November', 12:'December'}
+    if 1>number>12:
+      print('Month must be 1-12')
+    else:
+      return months.get(number)
+  def create_reported_date_dict(data):
+    count_dict = {}
+    for row in data[1:]:
+      key = row[1]
+      try:
+        count_dict[key]+=1
+      except:
+        count_dict[key]=1
+    return count_dict
+  def create_reported_month_dict(data):
+    month_dict = {}
+    for line in data[1:]:
+      month = line[1][0:2]
+      if month in month_dict:
+        month_dict[month]+=1
+      else:
+        month_dict[month]=1
+    return month_dict
+  def create_offense_dict(data):
+    offense_dict = {}
+    for row in data[1:]:
+      offense = row[7]
+      try:
+        offense_dict[offense]+=1
+      except:
+        offense_dict[offense]=1
+    return offense_dict
+  def create_offense_by_zip(data):
+    offense_zip_dict = {}
+    for row in data[1:]:
+      offense = row[7]
+      if offense in offense_zip_dict:
+        offense_dict = offense_zip_dict[offense]
+        if row[13] in offense_dict:
+          offense_dict[row[13]]+=1
+        else:
+          offense_dict[row[13]] = 1
+      else:
+        offense_zip_dict[offense] = {row[13]:1}
+    return offense_zip_dict
+  data_list = read_in_file()
+  month = create_reported_month_dict(data_list)
+  max_month = max(month,key=month.get)
+  print('\nThe month with the highest # of crimes is ',month_from_number(max_month),' with ',str(month[max_month]),' offenses')
+  offense= create_offense_dict(data_list)
+  max_offense = max(offense,key=offense.get)
+  print('The offense with the highest # of crimes is ',max_offense,' with ',str(offense[max_offense]),' offense(s)\n')
+  user_offense = input('Enter an offense ==> ')
+  while user_offense not in offense:
+    user_offense = input('Not a valid offense found, please try again. \nEnter an offense ==> ')
+  print('\n{} offenses by Zip Code'.format(user_offense))
+  print('{}{:>20}'.format('Zip Code','# of Offenses'))
+  print('='*30)
+  offense_zip = create_offense_by_zip(data_list)
+  for zip, num in offense_zip[user_offense].items():
+    if(zip == ""):
+      print('{}{:>25}'.format(zip,str(num)))
+    else:
+      print('{}{:>20}'.format(zip,str(num)))
+
