@@ -16,9 +16,7 @@
 #   When offenses print by zipcodes, crimes that were commited without zipcodes entered into the file
 #   will be printed first without a corresponding zipcode.
 ################################################
-
 if __name__ == "__main__":
-
   import csv
   path = '/Users/melisanguyen/Documents/GitHub/CS101-Lab/Code/Assignment 9/'
   def read_in_file():
