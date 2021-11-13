@@ -1,0 +1,91 @@
+################################################
+#CS101-Lab
+#Word Count Program
+#Melisa Nguyen
+#mnfh@umsystem.edu
+#PROBLEM:
+#Design a program to read a file's words and count how many times a word appears. Final result will show top 10 words that appear the the frequency that they appear in.
+#ALGORITHM:
+#   1. User will choice a crime file to open
+#   2. Creating a dictionaries from the file using lowercase forms of the word and counting how many times they appear within the file
+#   3. If the word is already in the dictionary key the value will be increased by 1
+#   4. If the word does not already have a key in the dictionary, a new key will be created and the value set to 1
+#   5. A new list will be created by sorting from highest frequency to lowest from the dictionary by it's values (frequency)
+#   6. By iterating through the new list the top 10 frequently used words will print
+#   7. Again, the new list will be interated through and a count will keep track of how many words have a value of 1
+#   8. By finding the length(amount of elements) of the list we find the amount of unquie words
+#ERROR HANDLING:
+#   All non-alphabetic will be removed from the list before entered into a dictionary
+################################################
+path = '/Users/melisanguyen/Documents/GitHub/CS101-Lab/Code/Assignment 10/'
+def open_file():
+  file = True
+  while file:
+    try:
+      input_file = input('\nEnter the name of the file to open: ')
+      path_file = path+input_file
+      read_file = open(path_file,'r')
+      return read_file
+    except:
+      print('Could not open file {}\nPlease try agian\n'.format(input_file))       
+def data_to_list(data):   
+  data_list = []
+  for line in data:
+    data_list.append(line)
+  return data_list
+#Splitting elements of list and only adding words longer than 3 letters:
+def split_list(data):
+  data_list = []
+  for i in data:
+    words = i.split()
+    for word in words:
+      if len(word) > 3:
+        data_list.append(word)
+      else:
+        pass
+  return data_list
+def create_final_list(data):
+  for i in range(len(data)):
+    new_word = ''
+    for j in data[i]:
+      if j.isalpha():
+        new_word = new_word.lower()
+        new_word += j
+    data[i] = new_word
+  return data
+def create_dict(data):
+  count_dict = {}
+  for word in data:
+    if word in count_dict:
+      count_dict[word]+=1
+    else:
+      count_dict[word]=1
+  return count_dict
+def sort_dict(data_dict):
+  return sorted(data_dict.items(), key = lambda x: x[1], reverse = True)
+def values_of_1(final_list):
+  single = 0
+  for item in range(len(final_list)):
+    for count in final_list[item]:
+      if count == 1:
+        single+=1
+  return single  
+data_file = open_file()
+str_list = data_to_list(data_file)
+list_split = split_list(str_list)
+final_list = create_final_list(list_split)
+count_dict = create_dict(final_list)
+final_list = sort_dict(count_dict)
+values_of_one = values_of_1(final_list)
+print()
+print('Most frequently used words')
+print('{:<10}{:^15}{:>10}'.format('#','Word','Freq.'))
+print('='*35)
+count = 1
+for key, value in final_list:
+    if count < 11:
+      print('{:<10}{:^15}{:>10}'.format(count,key,value))
+      count+=1
+print('\nThere are {} words that occur only once'.format(values_of_one))
+print('There are {} unique words in the document'.format(len(final_list)))
+
