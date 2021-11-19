@@ -33,7 +33,6 @@ def data_to_list(data):
   for line in data:
     data_list.append(line)
   return data_list
-#Splitting elements of list and only adding words longer than 3 letters:
 def split_list(data):
   data_list = []
   for i in data:
