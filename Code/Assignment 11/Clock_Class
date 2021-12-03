@@ -1,3 +1,14 @@
+################################################
+#CS101-Lab
+#Clock Class Program
+#Melisa Nguyen
+#mnfh@umsystem.edu
+#PROBLEM:
+#   Design a program to create a clock that ticks every second and displays time
+#ALGORITHM:
+#   1. Create a class to take hour minute and second input from user to display clock
+#ERROR HANDLING:
+################################################
 import time
 class Clock:
   def __init__(self,hour,minute,second,clock_type=0):
